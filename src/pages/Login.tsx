@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Form, Input, message, Typography } from 'antd';
 import { useMutation } from '@apollo/client';
@@ -20,7 +20,8 @@ const Login = () => {
 
   const [login] = useMutation(LOGIN_MUTATION);
 
-  const handleLogin = () => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     login({
       variables: {
         name: formData.name,
@@ -55,7 +56,7 @@ const Login = () => {
 
   return (
     <main>
-      <StyledForm>
+      <StyledForm onSubmitCapture={handleLogin}>
         <Title>Login</Title>
         <Item labelCol={{span: 4}} label='Name' {...getInvalidFields('name')}>
           <Input value={formData.name} onChange={e => setFormData(prev => ({...prev, name: e.target.value}))}/>
@@ -63,7 +64,7 @@ const Login = () => {
         <Item labelCol={{span: 4}} label='Password' {...getInvalidFields('password')}>
           <Input value={formData.password} onChange={e => setFormData(prev => ({...prev, password: e.target.value}))}/>
         </Item>
-        <Button type='primary' htmlType='submit' onClick={handleLogin}>Login</Button>
+        <Button type='primary' htmlType='submit'>Login</Button>
       </StyledForm>
     </main>
   )
