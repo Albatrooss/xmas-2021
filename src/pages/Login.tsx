@@ -17,6 +17,7 @@ const Login = () => {
   const [invalidFields, setInvalidFields] = useState<FormType>({
     name: '', password: ''
   })
+  const [pwdVisible, setPwdVisible] = useState<boolean>(false);
 
   const [login] = useMutation(LOGIN_MUTATION);
 
@@ -61,8 +62,8 @@ const Login = () => {
         <Item labelCol={{span: 4}} label='Name' {...getInvalidFields('name')}>
           <Input value={formData.name} onChange={e => setFormData(prev => ({...prev, name: e.target.value}))}/>
         </Item>
-        <Item labelCol={{span: 4}} label='Password' {...getInvalidFields('password')}>
-          <Input value={formData.password} onChange={e => setFormData(prev => ({...prev, password: e.target.value}))}/>
+        <Item labelCol={{span: 4}} label='Password' {...getInvalidFields('password')} >
+          <Input.Password value={formData.password} onChange={e => setFormData(prev => ({...prev, password: e.target.value}))}/>
         </Item>
         <Button type='primary' htmlType='submit'>Login</Button>
       </StyledForm>
