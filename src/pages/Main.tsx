@@ -22,7 +22,7 @@ const Main = () => {
 
   if (loading) return <h1>LOADING</h1>
 
-  if (data && !data?.me) {
+  if (data && !data?.meXmas) {
     navigate('/login');
     return null;
   }
@@ -32,11 +32,11 @@ const Main = () => {
       <Logout onClick={handleLogout}>Logout</Logout>
       <Container>
         <Title>
-        Merry Christmas <Name>{data.me.name}</Name>!!
+        Merry Christmas <Name>{data.meXmas.name}</Name>!!
         </Title>
         <Text>You have drawn:</Text>
         <GiftWrapper>
-          <Gift>{data.me.gift?.name ?? 'Coming soon...'}</Gift>
+          <Gift>{data.meXmas.gift?.name ?? 'Coming soon...'}</Gift>
         </GiftWrapper>
       </Container>
     </Wrapper>

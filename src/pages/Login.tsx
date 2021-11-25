@@ -26,7 +26,7 @@ const Login = () => {
         name: formData.name,
         password: formData.password,
       },
-      onCompleted({ login: { errors, user }}) {
+      onCompleted({ loginXmas: { errors, user }}) {
         console.log('errors', errors)
         if (errors && errors.length) {
           const error = errors[0];
