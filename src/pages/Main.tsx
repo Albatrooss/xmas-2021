@@ -72,7 +72,7 @@ const Container = styled.div`
     left: 10px;
   }
   &::before {
-    border: 2px solid #13b754;
+    border: 2px solid #16c24f;
     content: '';
     width: 556px;
     height: 356px;
