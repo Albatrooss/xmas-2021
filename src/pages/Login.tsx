@@ -17,7 +17,6 @@ const Login = () => {
   const [invalidFields, setInvalidFields] = useState<FormType>({
     name: '', password: ''
   })
-  const [pwdVisible, setPwdVisible] = useState<boolean>(false);
 
   const [login] = useMutation(LOGIN_MUTATION);
 
