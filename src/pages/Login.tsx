@@ -1,0 +1,90 @@
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button, Form, Input, message, Typography } from 'antd';
+import { useMutation } from '@apollo/client';
+import { LOGIN_MUTATION } from '../graphql/mutations/login';
+
+interface FormType {
+  name: string;
+  password: string;
+}
+
+const Login = () => {
+
+  const [formData, setFormData] = useState<FormType>({
+    name: '', password: ''
+  });
+  const [invalidFields, setInvalidFields] = useState<FormType>({
+    name: '', password: ''
+  })
+
+  const [login] = useMutation(LOGIN_MUTATION);
+
+  const handleLogin = () => {
+    login({
+      variables: {
+        name: formData.name,
+        password: formData.password,
+      },
+      onCompleted({ login: { errors, user }}) {
+        console.log('errors', errors)
+        if (errors && errors.length) {
+          const error = errors[0];
+          setInvalidFields(prev => ({
+            ...prev,
+            [error.field]: error.message
+          }))
+          return;
+        }
+        if (user.name) {
+          window.location.href = '/';
+        }
+      },
+      onError(err) {
+        message.error(err.message)
+      }
+    })
+  }
+
+  const getInvalidFields = (key: keyof FormType) => invalidFields[key]
+    ? {
+      help: invalidFields[key],
+      validateStatus: 'error',
+    } as {help: string; validateStatus: 'error'}
+    : {}
+
+  return (
+    <main>
+      <StyledForm>
+        <Title>Login</Title>
+        <Item labelCol={{span: 4}} label='Name' {...getInvalidFields('name')}>
+          <Input value={formData.name} onChange={e => setFormData(prev => ({...prev, name: e.target.value}))}/>
+        </Item>
+        <Item labelCol={{span: 4}} label='Password' {...getInvalidFields('password')}>
+          <Input value={formData.password} onChange={e => setFormData(prev => ({...prev, password: e.target.value}))}/>
+        </Item>
+        <Button type='primary' htmlType='submit' onClick={handleLogin}>Login</Button>
+      </StyledForm>
+    </main>
+  )
+
+}
+export default Login;
+
+const StyledForm = styled(Form)`
+  width: 600px;
+  background-color:white;
+  margin-top: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Item = styled(Form.Item)`
+  width: 100%;
+`;
+
+const Title = styled(Typography.Title)`
+  text-align: center;
+`;
