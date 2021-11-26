@@ -29,7 +29,7 @@ const Login: React.FC<Props> = ({ setAuth }) => {
     e.preventDefault();
     login({
       variables: {
-        name: formData.name,
+        name: formData.name.toLowerCase(),
         password: formData.password,
       },
       onCompleted({ loginXmas: { errors, user }}) {
