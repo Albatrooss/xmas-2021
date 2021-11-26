@@ -47,7 +47,6 @@ const Login: React.FC<Props> = ({ setAuth }) => {
             name: user.name,
             gift: user.gift.name
           })
-          // navigate('/');
         }
       },
       onError(err) {

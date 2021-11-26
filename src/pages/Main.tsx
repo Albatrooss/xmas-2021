@@ -12,11 +12,6 @@ const Main: React.FC<Props> = ({auth, setAuth}) => {
   const handleLogout = () => {
     setAuth(null);
   }
-
-  // if (!auth) {
-  //   navigate('/login');
-  //   return null;
-  // }
   
   return (
     <Wrapper>
