@@ -3,13 +3,20 @@ import styled from 'styled-components'
 import { Button, Form, Input, message, Typography } from 'antd';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../graphql/mutations/login';
+import { User } from '../App';
+import { useNavigate } from 'react-router';
 
 interface FormType {
   name: string;
   password: string;
 }
 
-const Login = () => {
+interface Props {
+  setAuth: (user: User) => void;
+}
+
+const Login: React.FC<Props> = ({ setAuth }) => {
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormType>({
     name: '', password: ''
@@ -38,7 +45,11 @@ const Login = () => {
           return;
         }
         if (user.name) {
-          window.location.href = '/';
+          setAuth({
+            name: user.name,
+            gift: user.gift.name
+          })
+          navigate('/');
         }
       },
       onError(err) {

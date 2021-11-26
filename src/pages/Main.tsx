@@ -4,8 +4,14 @@ import styled from 'styled-components'
 import { ME_QUERY } from '../graphql/queries/me'
 import { useNavigate } from 'react-router-dom'
 import { LOGOUT_MUTATION } from '../graphql/mutations/logout'
+import { User } from '../App'
 
-const Main = () => {
+interface Props {
+  auth: User,
+  setAuth: (user: User) => void;
+}
+
+const Main: React.FC<Props> = ({auth, setAuth}) => {
 
   const navigate = useNavigate();
   const {data, loading, refetch}  = useQuery(ME_QUERY);
@@ -17,12 +23,12 @@ const Main = () => {
   });
   
   const handleLogout = () => {
-    logout();
+    setAuth(null);
   }
 
   if (loading) return <h1>LOADING</h1>
 
-  if (data && !data?.meXmas) {
+  if (!auth) {
     navigate('/login');
     return null;
   }
