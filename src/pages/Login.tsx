@@ -45,7 +45,7 @@ const Login: React.FC<Props> = ({ setAuth }) => {
         if (user.name) {
           setAuth({
             name: user.name,
-            gift: user.gift.name
+            gift: user.gift?.name
           })
         }
       },
