@@ -1,48 +1,33 @@
 import React from 'react'
-import { useQuery, useMutation } from '@apollo/client'
 import styled from 'styled-components'
-import { ME_QUERY } from '../graphql/queries/me'
-import { useNavigate } from 'react-router-dom'
-import { LOGOUT_MUTATION } from '../graphql/mutations/logout'
 import { User } from '../App'
 
 interface Props {
   auth: User,
-  setAuth: (user: User) => void;
+  setAuth: (user: User | null) => void;
 }
 
 const Main: React.FC<Props> = ({auth, setAuth}) => {
-
-  const navigate = useNavigate();
-  const {data, loading, refetch}  = useQuery(ME_QUERY);
-
-  const [logout] = useMutation(LOGOUT_MUTATION, {
-    onCompleted() {
-      refetch();
-    }
-  });
   
   const handleLogout = () => {
     setAuth(null);
   }
 
-  if (loading) return <h1>LOADING</h1>
-
-  if (!auth) {
-    navigate('/login');
-    return null;
-  }
+  // if (!auth) {
+  //   navigate('/login');
+  //   return null;
+  // }
   
   return (
     <Wrapper>
       <Logout onClick={handleLogout}>Logout</Logout>
       <Container>
         <Title>
-        Merry Christmas <Name>{data.meXmas.name}</Name>!!
+        Merry Christmas <Name>{auth.name}</Name>!!
         </Title>
         <Text>You have drawn:</Text>
         <GiftWrapper>
-          <Gift>{data.meXmas.gift?.name ?? 'Coming soon...'}</Gift>
+          <Gift>{auth.gift ?? 'Coming soon...'}</Gift>
         </GiftWrapper>
       </Container>
     </Wrapper>

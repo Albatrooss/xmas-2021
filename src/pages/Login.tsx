@@ -4,7 +4,6 @@ import { Button, Form, Input, message, Typography } from 'antd';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../graphql/mutations/login';
 import { User } from '../App';
-import { useNavigate } from 'react-router';
 
 interface FormType {
   name: string;
@@ -16,7 +15,6 @@ interface Props {
 }
 
 const Login: React.FC<Props> = ({ setAuth }) => {
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormType>({
     name: '', password: ''
@@ -49,7 +47,7 @@ const Login: React.FC<Props> = ({ setAuth }) => {
             name: user.name,
             gift: user.gift.name
           })
-          navigate('/');
+          // navigate('/');
         }
       },
       onError(err) {

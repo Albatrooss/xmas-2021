@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
 
 import Login from './pages/Login';
@@ -10,21 +9,15 @@ import './App.css';
 export type User = {
   name: string;
   gift: string;
-} | null
+}
 
 function App() {
-  const [auth, setAuth] = useState<User>(null);
+  const [auth, setAuth] = useState<User | null>(null);
 
-  return (
-    <main>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Main auth={auth} setAuth={setAuth} />} />
-          <Route path='/login' element={<Login setAuth={setAuth} />} />
-        </Routes>
-      </BrowserRouter>
-    </main>
-  );
+  if (!auth) {
+    return <Login setAuth={setAuth} />
+  }
+  return <Main auth={auth} setAuth={setAuth} />
 }
 
 export default App;
